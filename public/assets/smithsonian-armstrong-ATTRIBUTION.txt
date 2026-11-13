@@ -1,0 +1,76 @@
+Neil Armstrong Spacesuit — 3D model attribution
+================================================
+
+Object
+------
+Neil Armstrong Space Suit (Apollo A7-L pressure garment assembly), worn by
+Neil Armstrong during the Apollo 11 mission, July 1969.
+
+Canonical source (Smithsonian Institution)
+------------------------------------------
+https://3d.si.edu/object/3d/d8c63ba6-4ebc-11ea-b77f-2e728ce88125
+
+Provided by
+-----------
+Smithsonian Digitization Programs Office (DPO) and the
+National Air and Space Museum (NASM), Smithsonian Institution.
+
+The suit was digitized by the Smithsonian using laser-arm scanning,
+structured-light scanning, photogrammetry and CT scanning.
+
+Retrieved from
+--------------
+This project obtained the low-resolution GLB from the documented public
+mirror maintained by Google's <model-viewer> project:
+
+  https://modelviewer.dev/shared-assets/models/NeilArmstrong.glb
+
+That mirror's own attribution file states, verbatim:
+
+  "Neil Armstrong Space Suit provided by the Smithsonian Digitization
+   Programs Office and the National Air and Space Museum;
+   Usage Conditions Apply."
+
+  https://github.com/google/model-viewer/blob/master/packages/shared-assets/ATTRIBUTIONS.md
+
+The object identifier in that attribution
+(d8c63ba6-4ebc-11ea-b77f-2e728ce88125) matches the canonical Smithsonian
+object page above, confirming this is the original Smithsonian scan and
+not a substitute or a reconstruction.
+
+Usage conditions
+----------------
+Smithsonian Terms of Use apply: https://www.si.edu/Termsofuse
+
+The Smithsonian 3D program releases many digitized objects for
+non-commercial, educational and personal use. This application is an
+independent educational project. No endorsement by the Smithsonian
+Institution is claimed or implied. If you intend commercial use, review
+the Smithsonian Terms of Use and contact the Smithsonian directly.
+
+File integrity
+--------------
+Local path : public/assets/smithsonian-armstrong.glb
+Format     : glTF 2.0 binary (.glb)
+Bytes      : 8,947,140
+Mesh       : 1 ("astronaut"), single merged surface
+Materials  : 4 (StingrayPBS1-4)
+Textures   : 12 embedded images
+Generator  : Khronos glTF Blender I/O v1.6.16
+Source bounds (metres): min [-0.2704, 0.7620, -0.2271]
+                        max [ 0.2497, 1.9072,  0.2630]
+
+The file is stored byte-for-byte as retrieved. Materials and textures are
+rendered as authored; LunaNav only centres the mesh, scales it uniformly
+to a 1.8 m display height, and rests its base on the scene floor.
+
+Important modelling limitation
+------------------------------
+This scan is a SINGLE MERGED MESH. It has no separable internal assemblies.
+Therefore LunaNav's Internal Inspection, Exploded Assembly, Cross-Section
+and layer-dissection modes use a clearly-labelled generic EVA reference
+architecture instead. Those views are NOT the internal construction of
+Armstrong's A7-L, and are NOT NASA/Axiom CAD.
+
+This artifact is an Apollo A7-L suit. It is NOT an AxEMU, not a NASA Z-2,
+and not an ISS EMU. Those are different architectures.

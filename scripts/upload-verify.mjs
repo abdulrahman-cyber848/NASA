@@ -1,0 +1,17 @@
+import { chromium } from 'playwright';
+const b = await chromium.launch({ args: ['--enable-unsafe-swiftshader','--use-angle=swiftshader','--no-sandbox'] });
+const p = await b.newPage({ viewport: { width: 1560, height: 960 } });
+const errs = [];
+p.on('pageerror', e => errs.push('PE: ' + e.message.slice(0,110)));
+p.on('console', m => { if (m.type()==='error') errs.push('CE: ' + m.text().slice(0,110)); });
+await p.addInitScript(() => localStorage.setItem('lunanav:guest','1'));
+await p.goto('http://localhost:3000/environment/spacesuit', { waitUntil: 'networkidle' });
+await p.waitForTimeout(5500);
+console.log('dropzone visible:', await p.getByText(/Drop the Smithsonian|أفلت ملف GLB/).first().isVisible());
+await p.locator('input[type="file"]').setInputFiles('/tmp/test-suit.glb');
+await p.waitForTimeout(5000);
+console.log('loaded chip:', await p.locator('text=/Loaded|مُحمَّل/').first().isVisible().catch(() => false));
+console.log('file name shown:', await p.getByText('test-suit.glb').count() > 0);
+console.log('errors:', errs.slice(0,4).join(' | ') || 'none');
+await p.screenshot({ path: '/tmp/shots/upload.png' });
+await b.close();
