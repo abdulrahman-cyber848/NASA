@@ -10,7 +10,6 @@ export function EnvTabs() {
   const { t } = useApp();
   const path = usePathname();
   const tabs = [
-    { href: '/environment/dust', key: 'env.tab.dust' },
     { href: '/environment/spacesuit', key: 'env.tab.suit' },
   ];
   return (

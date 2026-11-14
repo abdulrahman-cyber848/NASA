@@ -1,5 +1,5 @@
 import { redirect } from 'next/navigation';
 
 export default function EnvironmentIndex() {
-  redirect('/environment/dust');
+  redirect('/environment/spacesuit');
 }

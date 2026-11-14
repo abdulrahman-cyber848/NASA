@@ -335,10 +335,7 @@ export const ar: Record<string, string> = {
 
   'nav.environment': 'البيئة القمرية',
   'env.lab': 'مختبر البيئة القمرية',
-  'env.tab.dust': 'محاكي الغبار القمري',
   'env.tab.suit': 'مختبر فيزياء البدلة',
-  'env.dust.title': 'محاكي الغبار القمري',
-  'env.dust.sub': 'ريغوليث قذفي في الفراغ — تثيره الأحذية والعجلات وأعمدة العادم والشحنات. لا رياح ولا سحب: لا غلاف جوي معتبر للقمر.',
   'env.suit.title': 'مختبر فيزياء بدلة الفضاء',
   'env.suit.sub': 'بنية بدلة خروج عامة تفككها طبقة طبقة — والفيزياء التي تُبقي مرتديها حيًا.',
   'env.nav.sim': 'المحاكي', 'env.nav.adhesion': 'الالتصاق', 'env.nav.hazards': 'الأخطار', 'env.nav.missions': 'المهام', 'env.nav.prevention': 'الوقاية',

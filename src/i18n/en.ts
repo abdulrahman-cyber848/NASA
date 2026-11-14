@@ -335,10 +335,7 @@ export const en: Record<string, string> = {
 
   'nav.environment': 'Lunar Environment',
   'env.lab': 'Lunar Environment Lab',
-  'env.tab.dust': 'Lunar Dust Simulator',
   'env.tab.suit': 'Spacesuit Physics Lab',
-  'env.dust.title': 'Lunar Dust Simulator',
-  'env.dust.sub': 'Ballistic regolith in vacuum — kicked by boots, wheels, plumes and charge. No wind, no clouds: the Moon has no substantial atmosphere.',
   'env.suit.title': 'Spacesuit Physics Lab',
   'env.suit.sub': 'A generic EVA suit architecture you can pull apart, layer by layer — and the physics that keeps its wearer alive.',
   'env.nav.sim': 'Simulator', 'env.nav.adhesion': 'Adhesion', 'env.nav.hazards': 'Hazards', 'env.nav.missions': 'Missions', 'env.nav.prevention': 'Prevention',
