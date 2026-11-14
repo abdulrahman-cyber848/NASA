@@ -21,9 +21,10 @@ export type Mode = 'external' | 'internal' | 'exploded' | 'cross' | 'dust';
 
 export const MODES: { id: Mode; label: Bi; hint: Bi }[] = [
   { id: 'external', label: { en: 'External Inspection', ar: 'فحص خارجي' }, hint: { en: 'The original Smithsonian Armstrong A7-L scan, with spatially anchored annotations.', ar: 'مسح سميثسونيان الأصلي لبدلة أرمسترونغ A7-L، مع تعليقات مثبتة مكانيًا.' } },
-  { id: 'internal', label: { en: 'Internal Inspection', ar: 'فحص داخلي' }, hint: { en: 'Generic EVA reference (the scan is one merged surface, so it has no separable internals).', ar: 'مرجع EVA عام (المسح سطح واحد مدمج بلا أجزاء داخلية قابلة للفصل).' } },
-  { id: 'exploded', label: { en: 'Exploded Assembly', ar: 'تجميع مفكك' }, hint: { en: 'Generic EVA reference — educational assembly separation, not A7-L internals.', ar: 'مرجع EVA عام — فصل تجميعي تعليمي، وليس الأجزاء الداخلية لـA7-L.' } },
-  { id: 'cross', label: { en: 'Cross-Section', ar: 'مقطع عرضي' }, hint: { en: 'Generic EVA reference layer stack — a clipping plane exposes each garment.', ar: 'كومة طبقات مرجع EVA العام — مستوى قص يكشف كل ثوب.' } },
+  { id: 'internal', label: { en: 'Internal Inspection', ar: 'فحص داخلي' }, hint: { en: 'The same scan remains visible; internal arrangements are not present in this merged surface.', ar: 'يبقى المسح نفسه ظاهرًا؛ الترتيبات الداخلية غير موجودة في هذا السطح المدمج.' } },
+  { id: 'exploded', label: { en: 'Exploded Assembly', ar: 'تجميع مفكك' }, hint: { en: 'The scanned A7-L is one merged surface and cannot be separated into authentic assemblies.', ar: 'مسح A7-L سطح مدمج واحد ولا يمكن فصله إلى تجميعات أصلية.' } },
+  { id: 'cross', label: { en: 'Cross-Section', ar: 'مقطع عرضي' }, hint: { en: 'A clipping plane cuts the same scan; hidden internal layers are not part of the mesh.', ar: 'يقطع مستوى القص المسح نفسه؛ الطبقات الداخلية المخفية ليست جزءًا من الشبكة.' } },
+
   { id: 'dust', label: { en: 'Dust Exposure', ar: 'تعرض للغبار' }, hint: { en: 'Regolith grains strike the real scan; accumulation is graphical, not a validated deposition model.', ar: 'حبيبات الريغوليث تصطدم بالمسح الأصلي؛ التراكم رسومي وليس نموذج ترسب مُتحققًا منه.' } },
 ];
 

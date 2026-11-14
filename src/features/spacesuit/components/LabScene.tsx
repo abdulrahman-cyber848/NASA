@@ -278,13 +278,10 @@ function Declutter({ cards, enabled }: { cards: React.RefObject<Map<string, HTML
 function Suit(p: LabSceneProps & { s: SelCtx; setUiPaused: (v: boolean) => void; lang: 'en' | 'ar' }) {
   const si = useSmithsonianAvailability();
   const [siFailed, setSiFailed] = useState(false);
-  // The Smithsonian scan is a single merged surface: it is the real artifact for
-  // EXTERNAL and DUST inspection. Internal / exploded / layer views need separable
-  // assemblies, so they use the labeled generic EVA reference instead — never
-  // presented as the internals of Armstrong's A7-L.
-  const scanMode = p.mode === 'external' || p.mode === 'dust';
-  const showUser = Boolean(p.userModelUrl) && scanMode;
-  const showSI = !showUser && scanMode && p.siModel && si.available && !siFailed;
+  // Keep one source model mounted for every viewing mode. The Smithsonian scan
+  // is a merged surface; mode-specific internal geometry cannot be inferred from it.
+  const showUser = Boolean(p.userModelUrl);
+  const showSI = !showUser && p.siModel && si.available && !siFailed;
   const showReference = !showUser && !showSI;
   const cards = useRef<Map<string, HTMLButtonElement>>(new Map());
   const registerCard = useCallback((id: string, el: HTMLButtonElement | null) => {
@@ -336,15 +333,16 @@ function Suit(p: LabSceneProps & { s: SelCtx; setUiPaused: (v: boolean) => void;
   return (
     <group>
       {showUser && p.userModelUrl && (
-        <UserSuitModel url={p.userModelUrl} />
+        <UserSuitModel url={p.userModelUrl} opacity={p.mode === 'internal' ? 0.32 : 1} clip={clip} onSelect={() => p.onSelect('helmet-visor')} />
       )}
       {showSI && (
         <React.Suspense fallback={null}>
           <ModelBoundary onError={() => setSiFailed(true)}>
             <SmithsonianModel
               visible
-              opacity={p.xray > 0.02 ? Math.max(0.12, 1 - p.xray * 0.88) : 1}
-              onSelect={() => p.onSelect('outer')}
+              opacity={p.mode === 'internal' ? 0.32 : p.xray > 0.02 ? Math.max(0.12, 1 - p.xray * 0.88) : 1}
+              clip={clip}
+              onSelect={() => p.onSelect('helmet-visor')}
             />
           </ModelBoundary>
         </React.Suspense>

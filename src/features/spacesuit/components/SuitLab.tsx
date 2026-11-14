@@ -91,7 +91,7 @@ export default function SuitLab() {
   };
   const onZoneHit = useCallback((z: string) => setZoneHits(prev => ({ ...prev, [z]: (prev[z] ?? 0) + 1 })), []);
   const siInfo = useSmithsonianAvailability();
-  const scanOnScreen = siInfo.available && siModel && (mode === 'external' || mode === 'dust');
+  const scanOnScreen = siInfo.available && siModel && !userModel.url;
   const comp = selected ? compById(selected) : null;
   const toggleHidden = (id: string) => setHidden(prev => { const n = new Set(prev); if (n.has(id)) n.delete(id); else n.add(id); return n; });
   const topZone = useMemo(() => Object.entries(zoneHits).sort((a, b) => b[1] - a[1])[0]?.[0], [zoneHits]);
@@ -383,8 +383,8 @@ function SourcePanel({ siModel, onToggle, userModel, onUseFile }: {
           </p>
           <p className="text-[10.5px] leading-relaxed" style={{ color: '#F5B85C' }}>
             {L3(
-              'This is an Apollo A7-L, not an AxEMU. The scan is one merged surface, so Internal / Exploded / Cross-Section use a separate labeled generic EVA reference — not A7-L internals.',
-              'هذه بدلة أبولو A7-L وليست AxEMU. المسح سطح واحد مدمج، لذا الأوضاع الداخلية/التفكيك/المقطع تستخدم مرجع EVA عامًا منفصلًا وموسومًا — وليست الأجزاء الداخلية لـA7-L.',
+            'This is an Apollo A7-L, not an AxEMU. The same scan stays in all five modes, but it is one merged surface: its hidden internal geometry and separable assemblies are not available. Internal and exploded interpretations are not fabricated.',
+            'هذه بدلة أبولو A7-L وليست AxEMU. يبقى المسح نفسه في الأوضاع الخمسة، لكنه سطح مدمج واحد: هندسته الداخلية المخفية وتجميعاته القابلة للفصل غير متاحة. لا تُختلق الأجزاء الداخلية أو التفكيك.',
             )}
           </p>
           <div className="flex flex-wrap gap-x-3 gap-y-1">
@@ -404,7 +404,7 @@ function SourcePanel({ siModel, onToggle, userModel, onUseFile }: {
 
       <label className="flex items-center gap-2 text-[11px]" style={{ color: 'var(--color-dim)' }}>
         <input type="checkbox" checked={siModel} onChange={e => onToggle(e.target.checked)} />
-        {L3('Show the Smithsonian scan in external / dust modes', 'اعرض مسح سميثسونيان في الوضع الخارجي/الغبار')}
+        {L3('Use the Smithsonian scan as the shared model in all modes', 'استخدم مسح سميثسونيان كنموذج مشترك في جميع الأوضاع')}
       </label>
 
       <details className="text-[10.5px]">

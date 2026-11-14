@@ -56,8 +56,8 @@ export default function SpacesuitPage() {
           style={{ borderColor: 'rgba(245,184,92,0.35)', background: 'rgba(245,184,92,0.05)', color: 'var(--color-dim)' }}>
           <IInfo size={15} className="shrink-0 mt-0.5 text-[#F5B85C]" />
           {L(
-            'External and dust modes display the original Smithsonian Armstrong A7-L scan, digitized by the Smithsonian DPO and National Air and Space Museum. That scan is a single merged surface with no separable internals, so Internal, Exploded and Cross-Section modes use a clearly-labelled generic EVA reference instead. This artifact is an Apollo A7-L — not an AxEMU, Z-2 or ISS EMU. Smithsonian Terms of Use apply; no endorsement is implied.',
-            'الوضع الخارجي ووضع الغبار يعرضان مسح سميثسونيان الأصلي لبدلة أرمسترونغ A7-L، الذي رقمنه مكتب الرقمنة سميثسونيان والمتحف الوطني للطيران والفضاء. المسح سطح واحد مدمج بلا أجزاء داخلية قابلة للفصل، لذا الأوضاع الداخلية والتفكيك والمقطع تستخدم مرجع EVA عامًا موسومًا بوضوح. هذه القطعة بدلة أبولو A7-L — وليست AxEMU ولا Z-2 ولا EMU. تنطبق شروط استخدام سميثسونيان؛ ولا يوجد أي ادعاء بموافقتها.',
+            'All five modes retain the same original Smithsonian Armstrong A7-L scan, digitized by the Smithsonian DPO and National Air and Space Museum. The scan is a single merged surface: Internal and Exploded modes cannot reveal authentic hidden geometry or separate real assemblies. The cross-section clips that same surface only. This artifact is an Apollo A7-L — not an AxEMU, Z-2 or ISS EMU. Smithsonian Terms of Use apply; no endorsement is implied.',
+            'تحافظ الأوضاع الخمسة على مسح سميثسونيان الأصلي لبدلة أرمسترونغ A7-L، الذي رقمنه مكتب الرقمنة سميثسونيان والمتحف الوطني للطيران والفضاء. المسح سطح مدمج واحد: لا يمكن للوضعين الداخلي والمفكك إظهار هندسة داخلية أصلية أو فصل تجميعات حقيقية. يقتصر المقطع العرضي على قص السطح نفسه. هذه القطعة بدلة أبولو A7-L — وليست AxEMU ولا Z-2 ولا EMU. تنطبق شروط استخدام سميثسونيان؛ ولا يوجد أي ادعاء بموافقتها.',
           )}
         </p>
       </header>

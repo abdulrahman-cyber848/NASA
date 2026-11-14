@@ -144,7 +144,7 @@ export function useUserModel() {
 }
 
 /** Parses the object URL and mounts the mesh, centred and scaled. */
-export function UserSuitModel({ url, onSelect }: { url: string; onSelect?: () => void }) {
+export function UserSuitModel({ url, opacity = 1, clip = [], onSelect }: { url: string; opacity?: number; clip?: THREE.Plane[]; onSelect?: () => void }) {
   const [obj, setObj] = useState<THREE.Object3D | null>(null);
   const [failed, setFailed] = useState(false);
   const { camera } = useThree();
@@ -196,6 +196,23 @@ export function UserSuitModel({ url, onSelect }: { url: string; onSelect?: () =>
     camera.position.set(1.7, 1.15, 2.9);
     camera.lookAt(0, 0.9, 0);
   }, [obj, url, camera]);
+
+  useEffect(() => {
+    if (!obj) return;
+    obj.traverse(o => {
+      if (!(o instanceof THREE.Mesh)) return;
+      const materials = Array.isArray(o.material) ? o.material : [o.material];
+      for (const material of materials) {
+        const mat = material as THREE.MeshStandardMaterial;
+        mat.transparent = opacity < 0.999;
+        mat.opacity = opacity;
+        mat.depthWrite = opacity >= 0.999;
+        mat.clippingPlanes = clip.length ? clip : null;
+        mat.side = clip.length ? THREE.DoubleSide : THREE.FrontSide;
+        mat.needsUpdate = true;
+      }
+    });
+  }, [obj, opacity, clip]);
 
   // slow turntable so the scan reads as a real object on display
   useFrame((_, dt) => {
