@@ -100,16 +100,17 @@ function usePart(id: string, s: SelCtx) {
   };
 }
 
-function Label({ show, anchor, dir, title, body, onSelect, compact, onHover, register, prio }: {
+function Label({ show, anchor, dir, title, body, onSelect, compact, onHover, register, prio, portal }: {
   show: boolean; anchor: [number, number, number]; dir: [number, number, number];
   title: string; body: string; onSelect: () => void; compact: boolean; onHover: (v: boolean) => void;
   register: (id: string, el: HTMLButtonElement | null) => void; prio: number;
+  portal: React.RefObject<HTMLElement>;
 }) {
   const off: [number, number, number] = [dir[0] * 0.42, dir[1] * 0.34, dir[2] * 0.42];
   return (
     <group>
       {show && <Line points={[anchor, [anchor[0] + off[0], anchor[1] + off[1], anchor[2] + off[2]]]} color="#53D8E8" lineWidth={1} transparent opacity={0.55} />}
-      <Html center position={[anchor[0] + off[0], anchor[1] + off[1], anchor[2] + off[2]]} zIndexRange={[12, 0]}>
+      <Html portal={portal} center position={[anchor[0] + off[0], anchor[1] + off[1], anchor[2] + off[2]]} zIndexRange={[12, 0]}>
         <button
           ref={el => register(title, el)}
           data-prio={prio}
@@ -275,7 +276,7 @@ function Declutter({ cards, enabled }: { cards: React.RefObject<Map<string, HTML
   return null;
 }
 
-function Suit(p: LabSceneProps & { s: SelCtx; setUiPaused: (v: boolean) => void; lang: 'en' | 'ar' }) {
+function Suit(p: LabSceneProps & { s: SelCtx; setUiPaused: (v: boolean) => void; lang: 'en' | 'ar'; portal: React.RefObject<HTMLElement> }) {
   const si = useSmithsonianAvailability();
   const [siFailed, setSiFailed] = useState(false);
   // Keep one source model mounted for every viewing mode. The Smithsonian scan
@@ -508,6 +509,7 @@ function Suit(p: LabSceneProps & { s: SelCtx; setUiPaused: (v: boolean) => void;
             compact={p.mode !== 'external'}
             prio={a.modes.includes('external') ? 2 : 1}
             register={registerCard}
+            portal={p.portal}
             onSelect={() => p.onSelect(a.component)}
             onHover={p.setUiPaused}
           />
@@ -519,6 +521,8 @@ function Suit(p: LabSceneProps & { s: SelCtx; setUiPaused: (v: boolean) => void;
 
 export default function LabScene(p: LabSceneProps) {
   const controls = useRef<OrbitControlsImpl | null>(null);
+  const [htmlRoot, setHtmlRoot] = useState<HTMLDivElement | null>(null);
+  const portal = useMemo(() => ({ current: htmlRoot }), [htmlRoot]) as React.RefObject<HTMLElement>;
   const [hover, setHover] = useState<string | null>(null);
   const [uiPaused, setUiPaused] = useState(false);
   const [points, setPoints] = useState<THREE.Vector3[]>([]);
@@ -539,7 +543,9 @@ export default function LabScene(p: LabSceneProps) {
   }, [p.view]);
 
   return (
-    <Canvas
+    <div className="relative h-full w-full">
+      <div ref={setHtmlRoot} className="pointer-events-none absolute inset-0" />
+      {htmlRoot && <Canvas
       dpr={DPR[p.quality] as unknown as [number, number]}
       shadows={p.quality !== 'low'}
       camera={{ position: [2.2, 1.6, 3.6], fov: 40, near: 0.05, far: 60 }}
@@ -556,7 +562,7 @@ export default function LabScene(p: LabSceneProps) {
       <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow><circleGeometry args={[4.4, 56]} /><meshStandardMaterial color="#0A1322" roughness={0.9} /></mesh>
       <mesh rotation={[-Math.PI / 2, 0, 0]}><ringGeometry args={[4.3, 4.37, 72]} /><meshBasicMaterial color="#53D8E8" transparent opacity={0.35} /></mesh>
 
-      <Suit {...p} s={s} setUiPaused={setUiPaused} lang={p.lang ?? 'en'} />
+      <Suit {...p} s={s} setUiPaused={setUiPaused} lang={p.lang ?? 'en'} portal={portal} />
 
       {p.mode === 'dust' && <Dust rate={p.dustRate} quality={p.quality} levels={p.zoneLevels} onHit={p.onZoneHit} />}
       {/* cross-section plane guide */}
@@ -571,7 +577,7 @@ export default function LabScene(p: LabSceneProps) {
       {points.length === 2 && (
         <group>
           <Line points={[points[0].toArray(), points[1].toArray()]} color="#F5B85C" lineWidth={2} />
-          <Html center position={points[0].clone().add(points[1]).multiplyScalar(0.5).toArray()} style={{ pointerEvents: 'none' }}>
+          <Html portal={portal} center position={points[0].clone().add(points[1]).multiplyScalar(0.5).toArray()} style={{ pointerEvents: 'none' }}>
             <span style={{ fontSize: 11, fontWeight: 700, color: '#F5B85C', background: 'rgba(7,12,22,0.9)', padding: '2px 6px', borderRadius: 6 }}>
               {points[0].distanceTo(points[1]).toFixed(3)} m
             </span>
@@ -581,13 +587,14 @@ export default function LabScene(p: LabSceneProps) {
 
       <OrbitControls ref={controls} enableDamping dampingFactor={0.08} autoRotate={p.autoRotate && !uiPaused} autoRotateSpeed={0.7} minDistance={1.1} maxDistance={11} target={[0, 1.05, 0]} maxPolarAngle={1.66} />
       <Rig target={p.fly} controls={controls} />
-      {p.labels && <ZoneLabels labelFor={p.labelFor} selected={p.selected} onSelect={p.onSelect} suppress={p.showAnnotations} />}
-    </Canvas>
+      {p.labels && <ZoneLabels labelFor={p.labelFor} selected={p.selected} onSelect={p.onSelect} suppress={p.showAnnotations} portal={portal} />}
+    </Canvas>}
+    </div>
   );
 }
 
 /** Compact part labels (ISS-Explorer style labels-on/off). */
-function ZoneLabels({ selected, onSelect, labelFor, suppress }: { selected: string | null; onSelect: (id: string) => void; labelFor: (id: string) => string; suppress: boolean }) {
+function ZoneLabels({ selected, onSelect, labelFor, suppress, portal }: { selected: string | null; onSelect: (id: string) => void; labelFor: (id: string) => string; suppress: boolean; portal: React.RefObject<HTMLElement> }) {
   const SPOTS: [string, [number, number, number]][] = [
     ['helmet-visor', [0, 1.85, 0.16]], ['hut-shoulder', [0.46, 1.48, 0]],
     ['glove-outer', [0.78, 0.56, 0.16]], ['lta-waist', [0, 0.78, 0.24]],
@@ -598,7 +605,7 @@ function ZoneLabels({ selected, onSelect, labelFor, suppress }: { selected: stri
   return (
     <>
       {SPOTS.map(([id, pos]) => (
-        <Html key={id} center position={pos} zIndexRange={[15, 0]} style={{ visibility: suppress ? 'hidden' : 'visible' }}>
+        <Html key={id} portal={portal} center position={pos} zIndexRange={[15, 0]} style={{ visibility: suppress ? 'hidden' : 'visible' }}>
           <button
             onClick={e => { e.stopPropagation(); onSelect(id); }}
             onPointerEnter={() => setHover(id)}
