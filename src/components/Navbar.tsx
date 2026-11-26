@@ -10,7 +10,7 @@ const LINKS = [
   { href: '/explorer', key: 'nav.explorer' },
   { href: '/calendar', key: 'nav.calendar' },
   { href: '/learn', key: 'nav.learn' },
-  { href: '/environment/dust', key: 'nav.environment' },
+  { href: '/environment/spacesuit', key: 'nav.environment' },
 ];
 
 const isActive = (pathname: string, href: string) =>
