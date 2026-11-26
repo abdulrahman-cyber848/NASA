@@ -10,15 +10,16 @@
   },
   "engines": {
     "node": "24.x"
-  },  
+  },
   "dependencies": {
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.2",
     "@types/three": "^0.187.0",
+    "@vercel/analytics": "^2.0.1",
     "astronomy-engine": "^2.1.19",
     "dotenv": "17.3.1",
     "drizzle-orm": "0.45.2",
-    "next": "16.2.6",
+    "next": "^16.5.0-canary.67",
     "pg": "8.20.0",
     "playwright": "^1.64.1",
     "react": "19.2.6",
@@ -36,7 +37,7 @@
     "@types/react-dom": "19.2.3",
     "drizzle-kit": "0.31.10",
     "eslint": "9.39.4",
-    "eslint-config-next": "16.2.6",
+    "eslint-config-next": "^16.5.0-canary.67",
     "postcss": "8.5.8",
     "tailwindcss": "4.1.17",
     "typescript": "5.9.3"
