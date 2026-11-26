@@ -10,11 +10,12 @@
   },
   "engines": {
     "node": "24.x"
-  },  
+  },
   "dependencies": {
     "@react-three/drei": "^10.7.9",
     "@react-three/fiber": "^9.8.2",
     "@types/three": "^0.187.0",
+    "@vercel/analytics": "^2.0.1",
     "astronomy-engine": "^2.1.19",
     "dotenv": "17.3.1",
     "drizzle-orm": "0.45.2",

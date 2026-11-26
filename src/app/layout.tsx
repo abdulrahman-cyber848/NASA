@@ -5,6 +5,7 @@ import Starfield from '@/components/Starfield';
 import Navbar from '@/components/Navbar';
 import Footer from '@/components/Footer';
 import { Toasts } from '@/components/ui';
+import { Analytics } from '@vercel/analytics/next';
 
 export const metadata: Metadata = {
   title: 'LunaNav — Daily Moon Guide',
@@ -37,6 +38,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <main id="main" className="relative z-10 min-h-[70vh]">{children}</main>
           <Footer />
           <Toasts />
+          <Analytics />
         </AppProvider>
       </body>
     </html>
